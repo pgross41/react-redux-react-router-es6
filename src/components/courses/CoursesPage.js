@@ -17,7 +17,7 @@ class CoursesPage extends Component {
             alert("Loading courses failed" + error)
         });
     }
-    if(authors.lenght === 0){
+    if(authors.length === 0){
           actions.loadAuthors().catch(error=>{
               alert("Loading authors failed" + error);
           });
