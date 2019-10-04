@@ -1,20 +1,22 @@
-import * as types from './actionTypes';
-//step 1 creating an action...
-import * as authorApi from '../../api/authorApi'
+import * as types from "./actionTypes";
+import * as authorApi from "../../api/authorApi";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-//object short-hand syntax: we can ommit the right-hand side, since it matches left-hand side..
-
-export function loadAuthorsSuccess(authors){
-    return {type:types.LOAD_AUTHORS_SUCCESS, authors}
+export function loadAuthorsSuccess(authors) {
+  return { type: types.LOAD_AUTHORS_SUCCESS, authors };
 }
-//thunk
-export function loadAuthors(){
-    return function (dispatch){
-        return authorApi.getAuthors().then(authors=>{
-            //console.log("actions",authors);
-            dispatch(loadAuthorsSuccess(authors));
-        }).catch(error=>{
-            throw error;
-        })
-    }
+
+export function loadAuthors() {
+  return function(dispatch) {
+    dispatch(beginApiCall());
+    return authorApi
+      .getAuthors()
+      .then(authors => {
+        dispatch(loadAuthorsSuccess(authors));
+      })
+      .catch(error => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }

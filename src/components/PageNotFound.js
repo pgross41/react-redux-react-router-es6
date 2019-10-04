@@ -1,13 +1,5 @@
-import React from 'react';
-//import {Link} from 'react-router-dom';
+import React from "react";
 
-const PageNotFound = () => {
-    return (
-        <div>
-            <h1>Oops! Page not found.</h1>
-            
-        </div>
-    )
-}
+const PageNotFound = () => <h1>Oops! Page not found.</h1>;
 
-export default PageNotFound
+export default PageNotFound;

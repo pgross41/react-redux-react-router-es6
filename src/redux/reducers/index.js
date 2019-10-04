@@ -1,13 +1,12 @@
-//step-3
-import { combineReducers } from 'redux';
-import courses from './courseReducer';
-import authors from './authorReducer';
-// called as courses, because of default export from courseReducer
+import { combineReducers } from "redux";
+import courses from "./courseReducer";
+import authors from "./authorReducer";
+import apiCallsInProgress from "./apiStatusReducer";
+
 const rootReducer = combineReducers({
-    courses,
-    authors
-});// it will combine all reducers...
+  courses,
+  authors,
+  apiCallsInProgress
+});
 
 export default rootReducer;
-
-//in the courseReducer we call the function name is courseReducer, but we imported it as courses in this file because it is a default export.

@@ -4,8 +4,24 @@
   "scripts": {
     "start": "run-p start:dev start:api",
     "start:dev": "webpack-dev-server --config webpack.config.dev.js --port 3000",
-    "prestart:api" : "node tools/createMockDb.js",
-    "start:api" : "node tools/apiServer.js"
+    "prestart:api": "node tools/createMockDb.js",
+    "start:api": "node tools/apiServer.js",
+    "test": "jest --watch",
+    "test:ci": "jest",
+    "clean:build": "rimraf ./build && mkdir build",
+    "prebuild": "run-p clean:build test:ci",
+    "build": "webpack --config webpack.config.prod.js",
+    "postbuild": "run-p start:api serve:build",
+    "serve:build": "http-server ./build"
+  },
+  "jest": {
+    "setupFiles": [
+      "./tools/testSetup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/tools/styleMock.js"
+    }
   },
   "dependencies": {
     "bootstrap": "4.3.1",
@@ -57,11 +73,11 @@
     "node": ">=8"
   },
   "babel": {
-    "presets":[
+    "presets": [
       "babel-preset-react-app"
     ]
   },
-  "eslintConfig":{
+  "eslintConfig": {
     "extends": [
       "eslint:recommended",
       "plugin:react/recommended",
@@ -95,5 +111,4 @@
     },
     "root": true
   }
-
 }
